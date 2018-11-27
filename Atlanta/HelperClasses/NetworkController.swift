@@ -51,9 +51,12 @@ class NetworkController {
                     to url: URL) -> URL {
         
         var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
-        components?.queryItems = parameters?.compactMap({ URLQueryItem(name: $0.0, value: $0.1) })
-        components?.queryItems?.append(URLQueryItem(name: "api_key", value: NetworkController().APIKey))
-        components?.queryItems?.append(URLQueryItem(name: "format", value: NetworkController().jsonString))
+        if parameters != nil {
+            components?.queryItems = parameters?.compactMap({ URLQueryItem(name: $0.0, value: $0.1) })
+            components?.queryItems?.append(URLQueryItem(name: "api_key", value: NetworkController().APIKey))
+            components?.queryItems?.append(URLQueryItem(name: "format", value: NetworkController().jsonString))
+            components?.queryItems?.append(URLQueryItem(name: "limit", value: "20"))
+        }
         
         guard let url = components?.url else {
             fatalError("URL optional is nil")
