@@ -13,9 +13,7 @@ class SongController {
     private let trackAPIKey = "track"
     private let trackMethodAPIParamaterValue = "track.search"
     
-    
     func search(for song: String, pageNumber: Int?, completion: (([Song], _ pageNumber: Int, _ totalResults: Int) -> Void)? = nil) {
-        //completion: ((Data?, Error?) -> Void)? = nil)
         guard let url = URL(string:Constants.APIBaseURL) else { completion?([], 0, 0); return }
         var params = [methodAPIKey: trackMethodAPIParamaterValue,
                       trackAPIKey: song]
@@ -35,11 +33,9 @@ class SongController {
                 let totalResults = Int(totalResultsString)  {
                 completion?(songDictionary.compactMap ({ Song(from: $0) }), returnedPageNumber, totalResults)
                 return
+            } else {
+                completion?([], 0, 0)
             }
-            print(optionalData)
-            print(optionalError)
         }
-        completion?([], 0, 0)
-        return
     }
 }

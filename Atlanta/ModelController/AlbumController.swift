@@ -13,7 +13,6 @@ class AlbumController {
     private let albumAPIKey = "album"
     private let albumMethodAPIParamaterValue = "album.search"
     
-    
     func search(for album: String, pageNumber: Int?, completion: (([Album], _ pageNumber: Int, _ totalResults: Int) -> Void)? = nil) {
         //completion: ((Data?, Error?) -> Void)? = nil)
         guard let url = URL(string:Constants.APIBaseURL) else { completion?([], 0, 0); return }
@@ -35,11 +34,10 @@ class AlbumController {
                 let totalResults = Int(totalResultsString)  {
                 completion?(albumDictionary.compactMap ({ Album(from: $0) }), returnedPageNumber, totalResults)
                 return
+            } else {
+                completion?([], 0, 0)
             }
-            print(optionalData)
-            print(optionalError)
         }
-        completion?([], 0, 0)
-        return
     }
 }
+

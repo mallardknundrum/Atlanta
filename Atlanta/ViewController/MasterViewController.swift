@@ -11,9 +11,9 @@ import UIKit
 class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController? = nil
-    var artists: [Artist] =  [Artist(name: "someone", URLString: "aURL", thumbnailImageURLString: "thumbnailURL", imageURLString: "imageURL", id: "000")]
-    var albums: [Album] = [Album(name: "album", URLString: "url", artist: "artist name", thumbnailImageURLString: "thumbnailURL", imageURLString: "imageURL", id: "000")]
-    var songs: [Song] = [Song(name: "song", URLString: "url", artist: "artist name", thumbnailImageURLString: "thumbnailURL", imageURLString: "imageURL", id: "000")]
+    var artists: [Artist] =  []
+    var albums: [Album] = []
+    var songs: [Song] = []
     let searchController = UISearchController(searchResultsController: nil)
     var artistSearchResultsPage: Int? = nil
     var artistTotalResults = 1
@@ -26,17 +26,8 @@ class MasterViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        navigationItem.leftBarButtonItem = editButtonItem
-        
-        setUpSearchController()
 
-//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-//        navigationItem.rightBarButtonItem = addButton
-//        if let split = splitViewController {
-//            let controllers = split.viewControllers
-//            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-//        }
+        setUpSearchController()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -48,7 +39,6 @@ class MasterViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            // need to switch on section
             guard let indexPath = tableView.indexPathForSelectedRow, let destination = segue.destination.children[0] as? DetailViewController else { return }
             switch dataSource {
             case 0: destination.artist = artists[indexPath.row]
@@ -90,7 +80,6 @@ class MasterViewController: UITableViewController {
                     }
                 }
             }
-            // get image
         case 1:
             let album = albums[indexPath.row]
             cell.textLabel?.text = "Album Title: \(album.name)"
@@ -103,7 +92,6 @@ class MasterViewController: UITableViewController {
                     }
                 }
             }
-            // get image
         case 2:
             let song = songs[indexPath.row]
             cell.textLabel?.text = "Song Title: \(song.name)"
@@ -117,16 +105,10 @@ class MasterViewController: UITableViewController {
                 }
             }
 
-            // get image
         default:
             return cell // should never get here
         }
         return cell
-    }
-
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -151,7 +133,6 @@ class MasterViewController: UITableViewController {
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
-//        navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
         searchController.searchBar.scopeButtonTitles = ["Artist", "Album", "Song"]
         searchController.searchBar.placeholder = "Search last.fm"

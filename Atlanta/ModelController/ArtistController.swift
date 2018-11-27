@@ -14,9 +14,7 @@ class ArtistController {
     private let artistAPIKey = "artist"
     private let artistMethodAPIParamaterValue = "artist.search"
     
-    
     func search(for artist: String, pageNumber: Int?, completion: (([Artist], _ pageNumber: Int, _ totalResults: Int) -> Void)? = nil) {
-        //completion: ((Data?, Error?) -> Void)? = nil)
         guard let url = URL(string:Constants.APIBaseURL) else { completion?([], 0, 0); return }
         var params = [methodAPIKey: artistMethodAPIParamaterValue,
                       artistAPIKey: artist]
@@ -36,11 +34,9 @@ class ArtistController {
                 let totalResults = Int(totalResultsString)  {
                 completion?(artistsDictionary.compactMap ({ Artist(from: $0) }), returnedPageNumber, totalResults)
                 return
+            } else {
+                completion?([], 0, 0)
             }
-            print(optionalData)
-            print(optionalError)
         }
-        completion?([], 0, 0)
-        return
     }
 }
