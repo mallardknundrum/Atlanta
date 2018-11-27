@@ -12,4 +12,5 @@ class Constants {
     
     static var APIResultsPerPage: Int { get { return 20 } }
     static var APIBaseURL: String { get { return "http://ws.audioscrobbler.com/2.0/" } }
+    static var APIPageNumberKey: String { get { return "page" } }
 }

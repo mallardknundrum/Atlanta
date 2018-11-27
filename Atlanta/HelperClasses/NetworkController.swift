@@ -13,6 +13,7 @@ class NetworkController {
     // MARK: Properties
     
     private let APIKey = "2a35a7fa406f29d7773c61f278f15646"
+    private let jsonString = "json"
     private let APISharedSecret = "fa7f50ba0dc534927c18772a7f02e573"
     
     enum HTTPMethod: String {
@@ -51,6 +52,8 @@ class NetworkController {
         
         var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
         components?.queryItems = parameters?.compactMap({ URLQueryItem(name: $0.0, value: $0.1) })
+        components?.queryItems?.append(URLQueryItem(name: "api_key", value: NetworkController().APIKey))
+        components?.queryItems?.append(URLQueryItem(name: "format", value: NetworkController().jsonString))
         
         guard let url = components?.url else {
             fatalError("URL optional is nil")
