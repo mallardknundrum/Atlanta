@@ -97,6 +97,7 @@ class MasterViewController: UITableViewController {
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
         searchController.searchBar.scopeButtonTitles = ["Artist", "Album", "Song"]
+        searchController.searchBar.placeholder = "Search last.fm"
     }
 }
 
